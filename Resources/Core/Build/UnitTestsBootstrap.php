@@ -36,11 +36,11 @@
     // is called to run the tests since the 'relative to entry script' path calculation within
     // SystemEnvironmentBuilder is not used. However, the binary must be called from the document
     // root since getWebRoot() uses 'getcwd()'.
-    if (!getenv('TYPO3_PATH_ROOT')) {
-        putenv('TYPO3_PATH_ROOT=' . rtrim($testbase->getWebRoot(), '/'));
+    if (!($_ENV['TYPO3_PATH_ROOT'] ?? $_SERVER['TYPO3_PATH_ROOT'] ?? false)) {
+        $_ENV['TYPO3_PATH_ROOT'] = rtrim($testbase->getWebRoot(), '/');
     }
-    if (!getenv('TYPO3_PATH_WEB')) {
-        putenv('TYPO3_PATH_WEB=' . rtrim($testbase->getWebRoot(), '/'));
+    if (!($_ENV['TYPO3_PATH_WEB'] ?? $_SERVER['TYPO3_PATH_WEB'] ?? false)) {
+        $_ENV['TYPO3_PATH_WEB'] = rtrim($testbase->getWebRoot(), '/');
     }
 
     $testbase->defineSitePath();

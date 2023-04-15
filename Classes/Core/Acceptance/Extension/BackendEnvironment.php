@@ -187,27 +187,27 @@ abstract class BackendEnvironment extends Extension
     public function _initialize(): void
     {
         $this->config = array_replace($this->config, $this->localConfig);
-        $env = getenv('typo3Setup');
+        $env = $_ENV['typo3Setup'] ?? $_SERVER['typo3Setup'] ?? null;
         $this->config['typo3Setup'] = is_string($env)
             ? (trim($env) === 'false' ? false : (bool)$env)
             : $this->config['typo3Setup'];
-        $env = getenv('typo3Cleanup');
+        $env = $_ENV['typo3Cleanup'] ?? $_SERVER['typo3Cleanup'] ?? null;
         $this->config['typo3Cleanup'] = is_string($env)
             ? (trim($env) === 'false' ? false : (bool)$env)
             : $this->config['typo3Cleanup'];
-        $env = getenv('typo3DatabaseHost');
+        $env = $_ENV['typo3DatabaseHost'] ?? $_SERVER['typo3DatabaseHost'] ?? null;
         $this->config['typo3DatabaseHost'] = is_string($env) ? trim($env) : $this->config['typo3DatabaseHost'];
-        $env = getenv('typo3DatabaseUsername');
+        $env = $_ENV['typo3DatabaseUsername'] ?? $_SERVER['typo3DatabaseUsername'] ?? null;
         $this->config['typo3DatabaseUsername'] = is_string($env) ? trim($env) : $this->config['typo3DatabaseUsername'];
-        $env = getenv('typo3DatabasePassword');
+        $env = $_ENV['typo3DatabasePassword'] ?? $_SERVER['typo3DatabasePassword'] ?? null;
         $this->config['typo3DatabasePassword'] = is_string($env) ? $env : $this->config['typo3DatabasePassword'];
-        $env = getenv('typo3DatabasePort');
+        $env = $_ENV['typo3DatabasePort'] ?? $_SERVER['typo3DatabasePort'] ?? null;
         $this->config['typo3DatabasePort'] = is_string($env) ? (int)$env : (int)$this->config['typo3DatabasePort'];
-        $env = getenv('typo3DatabaseSocket');
+        $env = $_ENV['typo3DatabaseSocket'] ?? $_SERVER['typo3DatabaseSocket'] ?? null;
         $this->config['typo3DatabaseSocket'] = is_string($env) ? trim($env) : $this->config['typo3DatabaseSocket'];
-        $env = getenv('typo3DatabaseDriver');
+        $env = $_ENV['typo3DatabaseDriver'] ?? $_SERVER['typo3DatabaseDriver'] ?? null;
         $this->config['typo3DatabaseDriver'] = is_string($env) ? trim($env) : $this->config['typo3DatabaseDriver'];
-        $env = getenv('typo3DatabaseCharset');
+        $env = $_ENV['typo3DatabaseCharset'] ?? $_SERVER['typo3DatabaseCharset'] ?? null;
         $this->config['typo3DatabaseCharset'] = is_string($env) ? trim($env) : $this->config['typo3DatabaseCharset'];
     }
 
@@ -230,8 +230,8 @@ abstract class BackendEnvironment extends Extension
         $testbase->createDirectory(ORIGINAL_ROOT . 'typo3temp/var/transient');
 
         $instancePath = ORIGINAL_ROOT . 'typo3temp/var/tests/acceptance';
-        putenv('TYPO3_PATH_ROOT=' . $instancePath);
-        putenv('TYPO3_PATH_APP=' . $instancePath);
+        $_ENV['TYPO3_PATH_ROOT'] = $instancePath;
+        $_ENV['TYPO3_PATH_APP'] = $instancePath;
         $testbase->setTypo3TestingContext();
 
         $testbase->removeOldInstanceIfExists($instancePath);

@@ -249,8 +249,8 @@ abstract class FunctionalTestCase extends BaseTestCase implements ContainerInter
 
         $this->identifier = self::getInstanceIdentifier();
         $this->instancePath = self::getInstancePath();
-        putenv('TYPO3_PATH_ROOT=' . $this->instancePath);
-        putenv('TYPO3_PATH_APP=' . $this->instancePath);
+        $_ENV['TYPO3_PATH_ROOT'] = $this->instancePath;
+        $_ENV['TYPO3_PATH_APP'] = $this->instancePath;
 
         $testbase = new Testbase();
         $testbase->setTypo3TestingContext();
